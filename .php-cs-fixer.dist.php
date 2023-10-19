@@ -20,4 +20,4 @@ return (new PhpCsFixer\Config())
         'concat_space'                      => ['spacing' => 'one'],
     ])
     ->setFinder($finder)
-    ;
+;

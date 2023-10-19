@@ -1,8 +1,9 @@
 <?php
 
-use PragmaGoTech\Interview\FeeCalculator;
-use PragmaGoTech\Interview\Service\FeeCalculatorService;
+use DI\ContainerBuilder;
 
-return [
-    FeeCalculator::class => DI\autowire(FeeCalculatorService::class),
-];
+$containerBuilder = new ContainerBuilder();
+
+$containerBuilder->addDefinitions(__DIR__ . '/container_bindings.php');
+
+return $containerBuilder->build();

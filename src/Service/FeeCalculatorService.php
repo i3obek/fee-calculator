@@ -11,12 +11,8 @@ class FeeCalculatorService implements FeeCalculator
 {
     private int $round = 5;
     private array $loanFees;
-    private TermRepository $repository;
 
-    public function __construct()
-    {
-        $this->repository = new TermRepository();
-    }
+    public function __construct(protected TermRepository $repository) {}
 
     public function calculate(LoanProposal $loanProposal): float
     {

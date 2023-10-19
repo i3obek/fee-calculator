@@ -1,11 +1,17 @@
 <?php
 
-use DI\ContainerBuilder;
+use PragmaGoTech\Interview\App;
+use PragmaGoTech\Interview\Router;
+use PragmaGoTech\Interview\Controller\FeeCalculatorController;
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
+$container = require __DIR__ . '/config/container.php';
+$router    = new Router($container);
 
-$containerBuilder = new ContainerBuilder();
-$containerBuilder->addDefinitions(__DIR__.'/config/container.php');
-$container = $containerBuilder->build();
+$router->get('/', [FeeCalculatorController::class, 'index']);
 
-return $container;
+return new App(
+    $container,
+    $router,
+    ['uri' => $_SERVER['REQUEST_URI'], 'method' => $_SERVER['REQUEST_METHOD']]
+);
