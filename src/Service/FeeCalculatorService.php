@@ -2,84 +2,57 @@
 
 namespace PragmaGoTech\Interview\Service;
 
-use PragmaGoTech\Interview\Exception\OutOfRangeException;
-use PragmaGoTech\Interview\FeeCalculator;
-use PragmaGoTech\Interview\Model\LoanProposal;
-use PragmaGoTech\Interview\Repository\TermRepository;
+use PragmaGoTech\Interview\Contracts\FeeCalculatorInterface;
+use PragmaGoTech\Interview\VO\AmountMatch;
+use PragmaGoTech\Interview\Enum\Term;
+use PragmaGoTech\Interview\Model\Loan;
+use PragmaGoTech\Interview\Repository\FeeRepository;
 
-class FeeCalculatorService implements FeeCalculator
+class FeeCalculatorService implements FeeCalculatorInterface
 {
     private int $round = 5;
-    private array $loanFees;
 
-    public function __construct(protected TermRepository $repository) {}
+    public function __construct(
+        protected FeeRepository $feeRepository,
+        protected AmountService $amountService,
+    ) {}
 
-    public function calculate(LoanProposal $loanProposal): float
+    public function calculate(Loan $loan): float
     {
-        $this->loanFees = $this->repository->findByTerm($loanProposal->term());
+        $amount = $this->amountService->amount($loan);
 
-        $this->checkLoanAvailability($loanProposal->amount());
-
-        if ($this->isLoanSpecified($loanProposal->amount())) {
-            return $this->finalFee($loanProposal->amount(), $this->loanFees[$loanProposal->amount()]);
+        if (! empty($amount->exact)) {
+            return $this->roundUp($this->exactFee($loan, $amount));
         }
 
-        return $this->finalFee($loanProposal->amount(), $this->baseFee($loanProposal));
+        return $this->roundUp($this->interpolatedFee($loan, $amount));
     }
 
-    private function checkLoanAvailability(float $amount): void
+    private function exactFee(Loan $loan, AmountMatch $amountMatch): float
     {
-        $min = array_key_first($this->loanFees);
-        $max = array_key_last($this->loanFees);
+        $fees = $this->feeRepository->find(Term::from($loan->term())->toId());
 
-        if ($amount < $min || $amount > $max) {
-            throw new OutOfRangeException();
-        }
+        return $fees[key($amountMatch->exact)];
     }
 
-    private function isLoanSpecified(float $amount): bool
+    /**
+     * linear interpolation
+     * d = (x - x0) / (x1 - x0)  // value in the range of [0; 1]
+     * y = y0 * (1 - d) + y1 * d // interpolated value.
+     */
+    private function interpolatedFee(Loan $loan, AmountMatch $amountMatch): float
     {
-        return array_key_exists($amount, $this->loanFees);
-    }
+        $term = Term::from($loan->term());
+        $fees = $this->feeRepository->find($term->toId());
 
-    private function finalFee(float $loan, float $fee): int
-    {
-        $amount = $loan + $fee;
+        // interpolation math
+        $factor = ($loan->amount() - reset($amountMatch->less)) / (reset($amountMatch->less) - reset($amountMatch->more));
+        return ($fees[key($amountMatch->less)] * (1 - $factor)) + ($fees[key($amountMatch->more)] * $factor);
 
-        if (0 == ($amount % $this->round)) {
-            return $fee;
-        }
-
-        return $this->roundUp($amount) - $loan;
     }
 
     private function roundUp(float $number): int
     {
         return ceil($number / $this->round) * $this->round;
-    }
-
-    private function baseFee(LoanProposal $loanProposal): float
-    {
-        [$closestLower, $closestHigher] = $this->getClosest($loanProposal->amount(), $this->loanFees);
-
-        $factor = ($loanProposal->amount() - $closestLower) / ($closestHigher - $closestLower);
-        return ($this->loanFees[$closestLower] * (1 - $factor)) + ($this->loanFees[$closestHigher] * $factor);
-    }
-
-    private function getClosest(int $search, array $numbers): array
-    {
-        $current  = null;
-        $previous = null;
-        foreach ($numbers as $key => $item) {
-            if (null === $current || abs($search - $current) > abs($key - $search)) {
-                $previous = $current;
-                $current  = $key;
-            }
-        }
-
-        $closest = [$current, $previous];
-        sort($closest);
-
-        return $closest;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-use PragmaGoTech\Interview\FeeCalculator;
+use PragmaGoTech\Interview\Contracts\FeeCalculatorInterface;
 use PragmaGoTech\Interview\Service\FeeCalculatorService;
 
 return [
-    FeeCalculator::class => DI\autowire(FeeCalculatorService::class),
+    FeeCalculatorInterface::class => DI\autowire(FeeCalculatorService::class),
 ];

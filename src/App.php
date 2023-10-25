@@ -21,10 +21,10 @@ class App
     {
         try {
             echo $this->router->resolve($this->request['uri'], strtolower($this->request['method']));
-        } catch (\Exception) {
+        } catch (\Exception $e) {
             http_response_code(404);
 
-            echo 'Not Found';
+            echo $e->getMessage();
         }
     }
 }

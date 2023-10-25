@@ -2,17 +2,20 @@
 
 namespace PragmaGoTech\Interview\Controller;
 
-use PragmaGoTech\Interview\Model\LoanProposal;
-use PragmaGoTech\Interview\Service\FeeCalculatorService;
+use PragmaGoTech\Interview\Contracts\FeeCalculatorInterface;
+use PragmaGoTech\Interview\Model\Loan;
+use PragmaGoTech\Interview\Model\LoanAvailability;
 
 class FeeCalculatorController
 {
-    public function __construct(protected FeeCalculatorService $feeCalc) {}
+    public function __construct(
+        protected FeeCalculatorInterface $feeCalc,
+    ) {}
 
     public function index(): false|string
     {
-        $loan = new LoanProposal(24, 2750);
+        $loanAvailability = new LoanAvailability(new Loan(24, 2222));
 
-        return json_encode($this->feeCalc->calculate($loan));
+        return json_encode(['success']);
     }
 }
