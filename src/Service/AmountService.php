@@ -2,9 +2,9 @@
 
 namespace PragmaGoTech\Interview\Service;
 
-use PragmaGoTech\Interview\VO\AmountMatch;
-use PragmaGoTech\Interview\Model\Loan;
+use PragmaGoTech\Interview\Model\LoanInquiry;
 use PragmaGoTech\Interview\Repository\AmountRepository;
+use PragmaGoTech\Interview\VO\AmountMatch;
 
 class AmountService
 {
@@ -13,7 +13,7 @@ class AmountService
         protected LoanAvailabilityService $loanAvailabilityService
     ) {}
 
-    public function processAvailability(Loan $loan): bool
+    public function processAvailability(LoanInquiry $loan): bool
     {
         $available = $this->amountRepository->findAll();
         $reversed  = array_reverse($available);
@@ -22,14 +22,15 @@ class AmountService
         $min = array_pop($reversed);
 
         if ($loan->amount() < $min || $loan->amount() > $max) {
-            $this->loanAvailabilityService->prevent();
+            $this->loanAvailabilityService->denyLoan();
+
             return false;
         }
 
         return true;
     }
 
-    public function amount(Loan $loan): AmountMatch
+    public function amount(LoanInquiry $loan): AmountMatch
     {
         $result = $this->exact($loan->amount());
 

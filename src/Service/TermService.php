@@ -2,7 +2,7 @@
 
 namespace PragmaGoTech\Interview\Service;
 
-use PragmaGoTech\Interview\Model\Loan;
+use PragmaGoTech\Interview\Model\LoanInquiry;
 use PragmaGoTech\Interview\Repository\TermRepository;
 
 class TermService
@@ -12,17 +12,17 @@ class TermService
         protected LoanAvailabilityService $loanAvailabilityService
     ) {}
 
-    public function processAvailability(Loan $loan): bool
+    public function processAvailability(LoanInquiry $loan): bool
     {
         if (empty($this->termRepository->findByValue($loan->term()))) {
-            $this->loanAvailabilityService->prevent();
+            $this->loanAvailabilityService->denyLoan();
             return false;
         }
 
         return true;
     }
 
-    public function term(Loan $loan)
+    public function term(LoanInquiry $loan)
     {
         return $this->termRepository->findByValue($loan->term());
     }

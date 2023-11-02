@@ -6,13 +6,17 @@ namespace PragmaGoTech\Interview\Model;
 
 class LoanAvailability
 {
-
     public function __construct(
-        private Loan $loan,
+        private LoanInquiry $loan,
         private bool $available = true
     ) {}
 
-    public function prevent(): void
+    public function loan(): LoanInquiry
+    {
+        return $this->loan;
+    }
+
+    public function denyLoan(): void
     {
         $this->available = false;
     }

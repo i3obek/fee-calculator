@@ -39,11 +39,11 @@ composer install
 ```php
 <?php
 
-use PragmaGoTech\Interview\Model\Loan;
+use PragmaGoTech\Interview\Model\LoanInquiry;
 
 $calculator = new FeeCalculator();
 
-$application = new Loan(24, 2750);
+$application = new LoanInquiry(24, 2750);
 $fee = $calculator->calculate($application);
 // $fee = (float) 115.0
 ```

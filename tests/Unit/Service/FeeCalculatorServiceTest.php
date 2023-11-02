@@ -4,26 +4,28 @@ namespace Unit\Service;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use PragmaGoTech\Interview\Contracts\FeeCalculatorInterface;
 use PragmaGoTech\Interview\Exception\OutOfRangeException;
-use PragmaGoTech\Interview\Model\LoanProposal;
-use PragmaGoTech\Interview\Repository\TermRepository;
+use PragmaGoTech\Interview\Model\LoanInquiry;
+use PragmaGoTech\Interview\Repository\FeeRepository;
+use PragmaGoTech\Interview\Service\AmountService;
 use PragmaGoTech\Interview\Service\FeeCalculatorService;
 
 class FeeCalculatorServiceTest extends TestCase
 {
-    private FeeCalculatorService $feeCalc;
+    private FeeCalculatorInterface $feeCalc;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->feeCalc = new FeeCalculatorService(new TermRepository());
+        $this->feeCalc = new FeeCalculatorService(new FeeRepository(), $this->createMock(AmountService::class));
     }
 
     #[DataProvider('exampleLoans')]
     public function test_loan_calculation($expected, $term, $amount)
     {
-        $this->assertEquals($expected, $this->feeCalc->calculate(new LoanProposal($term, $amount)));
+        $this->assertEquals($expected, $this->feeCalc->calculate(new LoanInquiry($term, $amount)));
     }
 
     public static function exampleLoans(): array
@@ -41,7 +43,7 @@ class FeeCalculatorServiceTest extends TestCase
     public function test_range_exceptions(int $term, int $amount)
     {
         $this->expectException(OutOfRangeException::class);
-        $this->feeCalc->calculate(new LoanProposal($term, $amount));
+        $this->feeCalc->calculate(new LoanInquiry($term, $amount));
     }
 
     public static function unavailableLoans(): array
