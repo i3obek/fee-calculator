@@ -2,22 +2,25 @@
 
 namespace Unit\Repository;
 
+use Interview\Repository\TermRepository;
 use PHPUnit\Framework\TestCase;
-use PragmaGoTech\Interview\Exception\RangeNotFoundException;
-use PragmaGoTech\Interview\Repository\TermRepository;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class TermRepositoryTest extends TestCase
 {
-    public function test_repository_range_exception()
+    public function test_repository_range_is_missing()
     {
-        $this->expectException(RangeNotFoundException::class);
-        (new TermRepository())->findByTerm(5);
+        $this->assertEmpty((new TermRepository())->findByValue(5));
     }
 
     public function test_repository_range_and_sorting()
     {
         $repo  = new TermRepository();
-        $array = $repo->findByTerm(12);
+        $array = $repo->findByValue(12);
 
         $this->assertIsArray($array);
 

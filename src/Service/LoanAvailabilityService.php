@@ -1,9 +1,9 @@
 <?php
 
-namespace PragmaGoTech\Interview\Service;
+namespace Interview\Service;
 
-use PragmaGoTech\Interview\Model\LoanAvailability;
-use PragmaGoTech\Interview\Validator\LoanValidator;
+use Interview\Model\LoanAvailability;
+use Interview\Validator\LoanValidator;
 
 class LoanAvailabilityService
 {

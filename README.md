@@ -1,4 +1,4 @@
-PragmaGO.TECH Interview Test - Fee Calculation
+Fee Calculation Test
 =====
 
 ## Background
@@ -39,7 +39,7 @@ composer install
 ```php
 <?php
 
-use PragmaGoTech\Interview\Model\LoanInquiry;
+use Interview\Model\LoanInquiry;
 
 $calculator = new FeeCalculator();
 

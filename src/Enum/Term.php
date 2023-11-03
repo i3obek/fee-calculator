@@ -1,8 +1,8 @@
 <?php
 
-namespace PragmaGoTech\Interview\Enum;
+namespace Interview\Enum;
 
-use PragmaGoTech\Interview\Repository\TermRepository;
+use Interview\Repository\TermRepository;
 
 enum Term: int
 {

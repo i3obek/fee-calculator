@@ -1,6 +1,6 @@
 <?php
 
-namespace PragmaGoTech\Interview;
+namespace Interview;
 
 use Psr\Container\ContainerInterface;
 

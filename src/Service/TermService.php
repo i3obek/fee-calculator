@@ -1,9 +1,9 @@
 <?php
 
-namespace PragmaGoTech\Interview\Service;
+namespace Interview\Service;
 
-use PragmaGoTech\Interview\Model\LoanInquiry;
-use PragmaGoTech\Interview\Repository\TermRepository;
+use Interview\Model\LoanInquiry;
+use Interview\Repository\TermRepository;
 
 class TermService
 {

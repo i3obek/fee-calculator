@@ -1,8 +1,8 @@
 <?php
 
-use PragmaGoTech\Interview\App;
-use PragmaGoTech\Interview\Router;
-use PragmaGoTech\Interview\Controller\FeeCalculatorController;
+use Interview\App;
+use Interview\Router;
+use Interview\Controller\FeeCalculatorController;
 
 require __DIR__ . '/vendor/autoload.php';
 $container = require __DIR__ . '/config/container.php';

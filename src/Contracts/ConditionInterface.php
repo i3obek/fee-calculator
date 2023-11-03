@@ -1,8 +1,8 @@
 <?php
 
-namespace PragmaGoTech\Interview\Contracts;
+namespace Interview\Contracts;
 
-use PragmaGoTech\Interview\Model\LoanInquiry;
+use Interview\Model\LoanInquiry;
 
 interface ConditionInterface
 {

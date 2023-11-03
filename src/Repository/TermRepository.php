@@ -1,8 +1,8 @@
 <?php
 
-namespace PragmaGoTech\Interview\Repository;
+namespace Interview\Repository;
 
-use PragmaGoTech\Interview\Contracts\ArrayRepositoryInterface;
+use Interview\Contracts\ArrayRepositoryInterface;
 
 class TermRepository implements ArrayRepositoryInterface
 {

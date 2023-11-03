@@ -1,12 +1,12 @@
 <?php
 
-namespace PragmaGoTech\Interview\Service;
+namespace Interview\Service;
 
-use PragmaGoTech\Interview\Contracts\FeeCalculatorInterface;
-use PragmaGoTech\Interview\Enum\Term;
-use PragmaGoTech\Interview\Model\LoanInquiry;
-use PragmaGoTech\Interview\Repository\FeeRepository;
-use PragmaGoTech\Interview\VO\AmountMatch;
+use Interview\Contracts\FeeCalculatorInterface;
+use Interview\Enum\Term;
+use Interview\Model\LoanInquiry;
+use Interview\Repository\FeeRepository;
+use Interview\VO\AmountMatch;
 
 class FeeCalculatorService implements FeeCalculatorInterface
 {

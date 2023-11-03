@@ -1,10 +1,10 @@
 <?php
 
-namespace PragmaGoTech\Interview\Service;
+namespace Interview\Service;
 
-use PragmaGoTech\Interview\Model\LoanInquiry;
-use PragmaGoTech\Interview\Repository\AmountRepository;
-use PragmaGoTech\Interview\VO\AmountMatch;
+use Interview\Model\LoanInquiry;
+use Interview\Repository\AmountRepository;
+use Interview\VO\AmountMatch;
 
 class AmountService
 {

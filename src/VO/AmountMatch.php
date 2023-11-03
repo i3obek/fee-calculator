@@ -1,6 +1,6 @@
 <?php
 
-namespace PragmaGoTech\Interview\VO;
+namespace Interview\VO;
 
 class AmountMatch
 {

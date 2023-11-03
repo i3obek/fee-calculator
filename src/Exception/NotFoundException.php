@@ -1,5 +1,5 @@
 <?php
 
-namespace PragmaGoTech\Interview\Exception;
+namespace Interview\Exception;
 
 class NotFoundException extends \Exception {}

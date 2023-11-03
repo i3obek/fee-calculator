@@ -1,11 +1,11 @@
 <?php
 
-namespace PragmaGoTech\Interview\Controller;
+namespace Interview\Controller;
 
-use PragmaGoTech\Interview\Contracts\FeeCalculatorInterface;
-use PragmaGoTech\Interview\Model\LoanInquiry;
-use PragmaGoTech\Interview\Model\LoanAvailability;
-use PragmaGoTech\Interview\Service\LoanAvailabilityService;
+use Interview\Contracts\FeeCalculatorInterface;
+use Interview\Model\LoanInquiry;
+use Interview\Model\LoanAvailability;
+use Interview\Service\LoanAvailabilityService;
 
 class FeeCalculatorController
 {

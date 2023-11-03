@@ -1,10 +1,10 @@
 <?php
 
-namespace PragmaGoTech\Interview\Validator;
+namespace Interview\Validator;
 
-use PragmaGoTech\Interview\Model\LoanInquiry;
-use PragmaGoTech\Interview\Service\AmountService;
-use PragmaGoTech\Interview\Service\TermService;
+use Interview\Model\LoanInquiry;
+use Interview\Service\AmountService;
+use Interview\Service\TermService;
 
 class LoanValidator
 {

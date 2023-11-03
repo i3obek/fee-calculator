@@ -1,6 +1,6 @@
 <?php
 
-namespace PragmaGoTech\Interview\Contracts;
+namespace Interview\Contracts;
 
 interface ArrayRepositoryInterface
 {
