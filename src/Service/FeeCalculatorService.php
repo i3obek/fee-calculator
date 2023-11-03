@@ -30,7 +30,7 @@ class FeeCalculatorService implements FeeCalculatorInterface
 
     private function exactFee(LoanInquiry $loan, AmountMatch $amountMatch): float
     {
-        $fees = $this->feeRepository->find(Term::from($loan->term())->toId());
+        $fees = $this->feeRepository->find(Term::from($loan->term())->value);
 
         return $fees[key($amountMatch->exact)];
     }
@@ -43,10 +43,10 @@ class FeeCalculatorService implements FeeCalculatorInterface
     private function interpolatedFee(LoanInquiry $loan, AmountMatch $amountMatch): float
     {
         $term = Term::from($loan->term());
-        $fees = $this->feeRepository->find($term->toId());
+        $fees = $this->feeRepository->find($term->value);
 
         // interpolation math
-        $factor = ($loan->amount() - reset($amountMatch->less)) / (reset($amountMatch->less) - reset($amountMatch->more));
+        $factor = ($loan->amount() - reset($amountMatch->less)) / (reset($amountMatch->more) - reset($amountMatch->less));
         return ($fees[key($amountMatch->less)] * (1 - $factor)) + ($fees[key($amountMatch->more)] * $factor);
     }
 

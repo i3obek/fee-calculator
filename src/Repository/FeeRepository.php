@@ -7,10 +7,10 @@ use Interview\Contracts\ArrayRepositoryInterface;
 class FeeRepository implements ArrayRepositoryInterface
 {
     private static array $fees = [
-        0 => [
-            0  => 50,
-            1  => 90,
-            2  => 90,
+        12 => [
+//            0  => 50,
+//            1  => 90,
+//            2  => 90,
             3  => 115,
             4  => 100,
             5  => 120,
@@ -29,7 +29,7 @@ class FeeRepository implements ArrayRepositoryInterface
             18 => 380,
             19 => 400,
         ],
-        1 => [
+        24 => [
             0  => 70,
             1  => 100,
             2  => 120,
@@ -59,7 +59,7 @@ class FeeRepository implements ArrayRepositoryInterface
             return [];
         }
 
-        return [$id => self::$fees[$id]];
+        return self::$fees[$id];
     }
 
     public static function findByValue($value): array

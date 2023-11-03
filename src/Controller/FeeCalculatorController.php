@@ -16,10 +16,10 @@ class FeeCalculatorController
 
     public function index(): false|string
     {
-        $loanAvailability = new LoanAvailability(new LoanInquiry(24, 2222));
+        $loanAvailability = new LoanAvailability(new LoanInquiry(12, 2222));
 
-        if (! $this->loanAvailabilityService->isAvailable()) {
-            return false;
+        if (! $this->loanAvailabilityService->isAvailable($loanAvailability)) {
+            return json_encode(false);
         }
 
         return json_encode($this->feeCalculator->calculate($loanAvailability->loan()));

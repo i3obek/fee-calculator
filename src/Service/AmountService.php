@@ -10,10 +10,9 @@ class AmountService
 {
     public function __construct(
         protected AmountRepository $amountRepository,
-        protected LoanAvailabilityService $loanAvailabilityService
     ) {}
 
-    public function processAvailability(LoanInquiry $loan): bool
+    public function isAvailable(LoanInquiry $loan): bool
     {
         $available = $this->amountRepository->findAll();
         $reversed  = array_reverse($available);
@@ -22,8 +21,6 @@ class AmountService
         $min = array_pop($reversed);
 
         if ($loan->amount() < $min || $loan->amount() > $max) {
-            $this->loanAvailabilityService->denyLoan();
-
             return false;
         }
 

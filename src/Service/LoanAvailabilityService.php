@@ -3,23 +3,24 @@
 namespace Interview\Service;
 
 use Interview\Model\LoanAvailability;
-use Interview\Validator\LoanValidator;
 
 class LoanAvailabilityService
 {
     public function __construct(
-        protected LoanAvailability $loanAvailability,
-        protected LoanValidator $loanValidator,
+        protected TermService $termService,
+        protected AmountService $amountService
     ) {}
 
-    public function denyLoan(): void
+    public function isAvailable(LoanAvailability $loanAvailability): bool
     {
-        $this->loanAvailability->denyLoan();
-    }
+        if ($this->termService->isAvailable($loanAvailability->loan())
+            && $this->amountService->isAvailable($loanAvailability->loan())
+        ) {
+            return true;
+        }
 
-    public function isAvailable(): bool
-    {
-        $this->loanValidator->processAvailability($this->loanAvailability->loan());
-        return $this->loanAvailability->isAvailable();
+        $loanAvailability->denyLoan();
+
+        return false;
     }
 }

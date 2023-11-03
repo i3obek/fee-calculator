@@ -8,7 +8,6 @@ use Interview\Repository\AmountRepository;
 use Interview\Repository\FeeRepository;
 use Interview\Service\AmountService;
 use Interview\Service\FeeCalculatorService;
-use Interview\Service\LoanAvailabilityService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +23,6 @@ class FeeCalculatorServiceTest extends TestCase
             new FeeRepository(),
             new AmountService(
                 new AmountRepository(),
-                $this->createMock(LoanAvailabilityService::class)
             )
         );
     }
@@ -47,10 +45,9 @@ class FeeCalculatorServiceTest extends TestCase
     }
 
 //    #[DataProvider('unavailableLoans')]
-//    public function test_range_exceptions(int $term, int $amount)
+//    public function test_unavailable_loans(int $term, int $amount)
 //    {
-//        $this->expectException(OutOfRangeException::class);
-//        $this->feeCalc->calculate(new LoanInquiry($term, $amount));
+//        assertFalse($this->feeCalc->calculate(new LoanInquiry($term, $amount)));
 //    }
 
     public static function unavailableLoans(): array

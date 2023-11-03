@@ -16,7 +16,6 @@ class TermRepository implements ArrayRepositoryInterface
         if (! array_key_exists($id, self::$terms)) {
             return [];
         }
-
         return [$id => self::$terms[$id]];
     }
 

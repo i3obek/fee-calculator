@@ -9,13 +9,11 @@ class TermService
 {
     public function __construct(
         protected TermRepository $termRepository,
-        protected LoanAvailabilityService $loanAvailabilityService
     ) {}
 
-    public function processAvailability(LoanInquiry $loan): bool
+    public function isAvailable(LoanInquiry $loan): bool
     {
         if (empty($this->termRepository->findByValue($loan->term()))) {
-            $this->loanAvailabilityService->denyLoan();
             return false;
         }
 
