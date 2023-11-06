@@ -2,25 +2,29 @@
 
 namespace Interview\Service;
 
-use Interview\Model\LoanAvailability;
+use Interview\Model\LoanInquiry;
+use Interview\Validator\Fee\AmountCheck;
+use Interview\Validator\Fee\TermCheck;
+use Interview\Validator\LoanValidator;
 
 class LoanAvailabilityService
 {
     public function __construct(
-        protected TermService $termService,
-        protected AmountService $amountService
-    ) {}
+        protected LoanValidator $loanValidator,
+        protected AmountCheck $amountCheck,
+        protected TermCheck $termCheck,
+    ) {
+        $this->checkAvailability();
+    }
 
-    public function isAvailable(LoanAvailability $loanAvailability): bool
+    public function isAvailable(LoanInquiry $loanInquiry): bool
     {
-        if ($this->termService->isAvailable($loanAvailability->loan())
-            && $this->amountService->isAvailable($loanAvailability->loan())
-        ) {
-            return true;
-        }
+        return $this->loanValidator->processAvailability($loanInquiry);
+    }
 
-        $loanAvailability->denyLoan();
-
-        return false;
+    private function checkAvailability(): void
+    {
+        $this->loanValidator->attach($this->amountCheck);
+        $this->loanValidator->attach($this->termCheck);
     }
 }

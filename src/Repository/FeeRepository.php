@@ -8,9 +8,9 @@ class FeeRepository implements ArrayRepositoryInterface
 {
     private static array $fees = [
         12 => [
-//            0  => 50,
-//            1  => 90,
-//            2  => 90,
+            0  => 50,
+            1  => 90,
+            2  => 90,
             3  => 115,
             4  => 100,
             5  => 120,
@@ -67,7 +67,7 @@ class FeeRepository implements ArrayRepositoryInterface
         $fees = [];
         foreach (self::$fees as $termId => $item) {
             $amount = array_search($value, self::$fees);
-            if ($amount) {
+            if (false !== $amount) {
                 $fees[$termId] = [$amount => $value];
             }
         }

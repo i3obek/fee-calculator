@@ -16,13 +16,14 @@ class TermRepository implements ArrayRepositoryInterface
         if (! array_key_exists($id, self::$terms)) {
             return [];
         }
+
         return [$id => self::$terms[$id]];
     }
 
     public static function findByValue($value): array
     {
         $id = array_search($value, self::$terms);
-        if (! $id) {
+        if (false === $id) {
             return [];
         }
 

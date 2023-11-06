@@ -41,7 +41,7 @@ class AmountRepository implements ArrayRepositoryInterface
     public static function findByValue($value): array
     {
         $id = array_search($value, self::$amounts);
-        if (! $id) {
+        if (false === $id) {
             return [];
         }
 
