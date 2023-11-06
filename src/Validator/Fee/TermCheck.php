@@ -1,27 +1,23 @@
 <?php
 
-namespace Interview\Service;
+namespace Interview\Validator\Fee;
 
+use Interview\Contracts\ConditionInterface;
 use Interview\Model\LoanInquiry;
 use Interview\Repository\TermRepository;
 
-class TermService
+class TermCheck implements ConditionInterface
 {
     public function __construct(
         protected TermRepository $termRepository,
     ) {}
 
-    public function isAvailable(LoanInquiry $loan): bool
+    public function check(LoanInquiry $loan): bool
     {
         if (empty($this->termRepository->findByValue($loan->term()))) {
             return false;
         }
 
         return true;
-    }
-
-    public function term(LoanInquiry $loan)
-    {
-        return $this->termRepository->findByValue($loan->term());
     }
 }

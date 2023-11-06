@@ -6,5 +6,5 @@ use Interview\Model\LoanInquiry;
 
 interface ConditionInterface
 {
-    public function processAvailability(LoanInquiry $loan);
+    public function check(LoanInquiry $loan);
 }

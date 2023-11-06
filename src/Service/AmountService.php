@@ -12,21 +12,6 @@ class AmountService
         protected AmountRepository $amountRepository,
     ) {}
 
-    public function isAvailable(LoanInquiry $loan): bool
-    {
-        $available = $this->amountRepository->findAll();
-        $reversed  = array_reverse($available);
-
-        $max = array_pop($available);
-        $min = array_pop($reversed);
-
-        if ($loan->amount() < $min || $loan->amount() > $max) {
-            return false;
-        }
-
-        return true;
-    }
-
     public function amount(LoanInquiry $loan): AmountMatch
     {
         $result = $this->exact($loan->amount());
