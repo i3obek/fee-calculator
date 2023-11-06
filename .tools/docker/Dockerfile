@@ -60,7 +60,7 @@ COPY --from=composer_upstream --link /composer /usr/bin/composer
 # Dev PHP image
 FROM php_base AS php_dev
 
-ENV APP_ENV=dev XDEBUG_MODE=off
+ENV APP_ENV=dev XDEBUG_MODE=develop,debug
 
 RUN chown -R www-data:www-data /var/www
 
